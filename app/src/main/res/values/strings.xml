@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Treasure Keeper</string>
+    <string name="title_item_list">List of Magic Items</string>
+    <string name="title_activity_item_detail">ItemDetailActivity</string>
+</resources>
