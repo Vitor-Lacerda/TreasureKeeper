@@ -1,6 +1,8 @@
 package com.domain.vitor.estudos1;
 
 import android.app.ActionBar;
+import android.graphics.Typeface;
+import android.icu.text.DisplayContext;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -32,24 +34,41 @@ public class ItemDetailActivity extends AppCompatActivity {
             descriptionView.setText(myItem.description);
 
             if(myItem.table != null){
-                LinearLayout.LayoutParams tableParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+                LinearLayout mainLayout = (LinearLayout)findViewById(R.id.item_detail_scroll_layout);
 
-                TableLayout tableLayout  = new TableLayout(this);
+                LinearLayout.LayoutParams tableParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+                TableLayout tableLayout = new TableLayout(this);
                 tableLayout.setLayoutParams(tableParams);
 
                 for(int i = 0; i<myItem.table.rows;i++)
                 {
+
                     TableRow newRow = new TableRow(this);
+                    newRow.setWeightSum(1);
+
                     for(int j = 0; j<myItem.table.columns;j++)
                     {
+
+                        TableRow.LayoutParams colParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,1f/myItem.table.columns);
+                        colParams.setMargins(0,(int)getResources().getDimension(R.dimen.text_margin),(int)getResources().getDimension(R.dimen.text_margin),(int)getResources().getDimension(R.dimen.text_margin));
                         TextView colTextView = new TextView(this);
                         colTextView.setText(myItem.table.stringArray[i][j]);
+
+                        colTextView.setLayoutParams(colParams);
+
+                        if(i == 0){
+                            colTextView.setTypeface(Typeface.DEFAULT_BOLD);
+                        }
+
                         newRow.addView(colTextView);
+
                     }
                     tableLayout.addView(newRow);
                 }
 
-                LinearLayout mainLayout = (LinearLayout)findViewById(R.id.item_detail_scroll_layout);
+
                 mainLayout.addView(tableLayout);
 
             }
