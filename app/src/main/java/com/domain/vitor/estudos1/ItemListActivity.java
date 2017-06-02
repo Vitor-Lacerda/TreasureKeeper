@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 //Essa activity mostra uma lista dos itens magicos do DMG
@@ -27,17 +30,51 @@ public class ItemListActivity extends ListActivity {
     private final Item.Category[] categoryValues = Item.Category.values();
     private final Item.Rarity[] rarityValues = Item.Rarity.values();
 
+    private ArrayList<Item> displayedItems;
+    private ArrayList<Item> jsonItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
-
+        setButtons();
        // ArrayList<Item> items = makeItemList();
-        ArrayList<Item> items = makeItemListFromJSON();
+        jsonItems = makeItemListFromJSON();
 
-        myAdapter = new ItemAdapter(this, items);
+        displayedItems = jsonItems;
+
+        myAdapter = new ItemAdapter(this, displayedItems);
         setListAdapter(myAdapter);
+        sortItemsByName();
 
+
+
+    }
+
+    private void setButtons(){
+        Button byName = (Button)findViewById(R.id.sort_by_name_button);
+        byName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sortItemsByName();
+            }
+        });
+
+        Button byCategory = (Button)findViewById(R.id.sort_by_category_button);
+        byCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sortItemsByCategory();
+            }
+        });
+
+        Button byRariry = (Button)findViewById(R.id.sort_by_rarity_button);
+        byRariry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sortItemsByRarity();
+            }
+        });
 
     }
 
@@ -47,16 +84,71 @@ public class ItemListActivity extends ListActivity {
         Intent i = new Intent();
         Bundle b = new Bundle();
 
-        Item clickedItem = (Item) getListAdapter().getItem(position);
+        //Item clickedItem = (Item) getListAdapter().getItem(position);
 
-        b.putSerializable("ITEM_KEY", clickedItem);
-        i.setClass(this, ItemDetailActivity.class);
+        //b.putSerializable("ITEM_KEY", clickedItem);
+        //i.setClass(this, ItemDetailActivity.class);
+        b.putParcelableArrayList(getResources().getString(R.string.intent_item_list_key), displayedItems);
+        b.putInt(getResources().getString(R.string.intent_item_index_key), position);
+        i.setClass(this, ItemDetailPagerActivity.class);
 
         i.putExtras(b);
         startActivity(i);
 
 
     }
+
+
+
+
+
+    private void sortItemsByName(){
+        Collections.sort(displayedItems, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                return o1.item_name.compareTo(o2.item_name);
+            }
+        });
+        myAdapter.setDataSource(displayedItems);
+        setListAdapter(myAdapter);
+    }
+
+    private void sortItemsByCategory(){
+        Collections.sort(displayedItems, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                if(o1.category == o2.category){
+                    if(o1.rarity == o2.rarity){
+                        return o1.item_name.compareTo(o2.item_name);
+                    }
+                    return o1.rarity.compareTo(o2.rarity);
+                }
+                return o1.category.compareTo(o2.category);
+
+            }
+        });
+        myAdapter.setDataSource(displayedItems);
+        setListAdapter(myAdapter);
+    }
+
+    private void sortItemsByRarity(){
+        Collections.sort(displayedItems, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                if(o1.rarity == o2.rarity){
+                    if(o1.category == o2.category){
+                        return o1.item_name.compareTo(o2.item_name);
+                    }
+                    return o1.category.compareTo(o2.category);
+                }
+                return o1.rarity.compareTo(o2.rarity);
+            }
+        });
+        myAdapter.setDataSource(displayedItems);
+        setListAdapter(myAdapter);
+
+    }
+
 
     /*
     ArrayList<Item> makeItemList(){
@@ -163,6 +255,7 @@ public class ItemListActivity extends ListActivity {
             for(int i = 0; i<magicItems.length(); i++){
                 JSONObject nextItem = magicItems.getJSONObject(i);
                 String name = nextItem.getString("name");
+                int page = nextItem.getInt("page");
                 Item.Category category = categoryValues[nextItem.getInt("category")];
                 String type = nextItem.getString("type");
                 Item.Rarity rarity = rarityValues[nextItem.getInt("rarity")];
@@ -185,11 +278,11 @@ public class ItemListActivity extends ListActivity {
                         }
                     }
 
-                    Item newItem = new Item(name, category, type, rarity, req_attunement, attunement, description, r, c, table);
+                    Item newItem = new Item(name, page, category, type, rarity, req_attunement, attunement, description, r, c, table);
                     items.add(newItem);
                 }
                 else{
-                    Item newItem = new Item(name, category, type, rarity, req_attunement, attunement, description);
+                    Item newItem = new Item(name, page, category, type, rarity, req_attunement, attunement, description);
                     items.add(newItem);
                 }
 

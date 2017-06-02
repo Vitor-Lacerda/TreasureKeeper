@@ -24,6 +24,10 @@ public class ItemAdapter extends BaseAdapter {
         myInflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void setDataSource(ArrayList<Item> l){
+        dataSource = l;
+    }
+
     @Override
     public int getCount() {
         return dataSource.size();
@@ -49,9 +53,6 @@ public class ItemAdapter extends BaseAdapter {
         Item myItem = (Item)getItem(position);
 
         nameView.setText(myItem.item_name);
-
-
-
         shortDescriptionView.setText(myItem.details);
 
 

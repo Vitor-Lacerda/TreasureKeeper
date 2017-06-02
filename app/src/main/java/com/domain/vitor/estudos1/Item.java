@@ -2,11 +2,16 @@ package com.domain.vitor.estudos1;
 
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 
 
-public class Item implements Serializable {
+public class Item implements Parcelable {
+
+
 
 
     public enum Category {
@@ -56,13 +61,18 @@ public class Item implements Serializable {
 
     public boolean requires_attunement;
     public String item_name, item_type, attunement_description, description;
+    public int pageNumber;
     public Rarity rarity;
     public Category category;
     public String details;
     public Table table;
 
-    public Item(String _name, Category _cat, String _type, Rarity _rarity, boolean req_attunement, String _attunement, String _description) {
+
+
+
+    public Item(String _name, int page, Category _cat, String _type, Rarity _rarity, boolean req_attunement, String _attunement, String _description) {
         item_name = _name;
+        pageNumber = page;
         category = _cat;
         item_type = _type;
         rarity = _rarity;
@@ -72,11 +82,15 @@ public class Item implements Serializable {
 
         String short_description = category.toString();
         if(category == Item.Category.ARMOR || category == Item.Category.WEAPON){
-            short_description = short_description.concat("(" + item_type + ")");
+            short_description = short_description.concat(" (" + item_type + ")");
         }
-        short_description = short_description.concat("," + rarity.toString());
+        short_description = short_description.concat(", " + rarity.toString());
         if(requires_attunement){
-            short_description = short_description.concat("(requires attunement "+ attunement_description +")" );
+            short_description = short_description.concat(" (requires attunement");
+            if(!attunement_description.isEmpty()){
+                short_description = short_description.concat(" " + attunement_description);
+            }
+            short_description = short_description.concat(")");
         }
 
         details = short_description;
@@ -84,10 +98,10 @@ public class Item implements Serializable {
 
     }
 
-    public Item(String _name, Category _cat, String _subType, Rarity _rarity, boolean req_attunement, String _attunement,
+    public Item(String _name, int page, Category _cat, String _subType, Rarity _rarity, boolean req_attunement, String _attunement,
                 String _description, int rows, int columns, String[][] tableContent) {
 
-        this(_name, _cat, _subType, _rarity, req_attunement, _attunement, _description);
+        this(_name, page, _cat, _subType, _rarity, req_attunement, _attunement, _description);
 
 
         table = new Table(rows, columns, tableContent);
@@ -96,5 +110,45 @@ public class Item implements Serializable {
     }
 
 
+    protected Item(Parcel in) {
+        requires_attunement = in.readByte() != 0;
+        item_name = in.readString();
+        item_type = in.readString();
+        attunement_description = in.readString();
+        description = in.readString();
+        pageNumber = in.readInt();
+        details = in.readString();
+        table = in.readParcelable(Table.class.getClassLoader());
 
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (requires_attunement ? 1 : 0));
+        dest.writeString(item_name);
+        dest.writeString(item_type);
+        dest.writeString(attunement_description);
+        dest.writeString(description);
+        dest.writeInt(pageNumber);
+        dest.writeString(details);
+        dest.writeParcelable(table, flags);
+
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 }

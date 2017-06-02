@@ -1,13 +1,8 @@
 package com.domain.vitor.estudos1;
 
-import android.app.ActionBar;
 import android.graphics.Typeface;
-import android.icu.text.DisplayContext;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -19,7 +14,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_detail);
+        setContentView(R.layout.item_detail_fragment);
 
         Bundle b = this.getIntent().getExtras();
         if(b!=null){
@@ -47,6 +42,9 @@ public class ItemDetailActivity extends AppCompatActivity {
 
                     TableRow newRow = new TableRow(this);
                     newRow.setWeightSum(1);
+                    if(i%2 != 0) {
+                        newRow.setBackgroundColor(getResources().getColor(R.color.tableBackground));
+                    }
 
                     for(int j = 0; j<myItem.table.columns;j++)
                     {
@@ -55,7 +53,6 @@ public class ItemDetailActivity extends AppCompatActivity {
                         colParams.setMargins(0,(int)getResources().getDimension(R.dimen.text_margin),(int)getResources().getDimension(R.dimen.text_margin),(int)getResources().getDimension(R.dimen.text_margin));
                         TextView colTextView = new TextView(this);
                         colTextView.setText(myItem.table.stringArray[i][j]);
-
                         colTextView.setLayoutParams(colParams);
 
                         if(i == 0){

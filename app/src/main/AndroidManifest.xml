@@ -18,9 +18,8 @@
         <activity
             android:name=".ItemDetailActivity"
             android:label="@string/title_activity_item_detail"
-            android:theme="@style/AppTheme.NoTitleBar"
-            >
-        </activity>
+            android:theme="@style/AppTheme.NoTitleBar"></activity>
+        <activity android:name=".ItemDetailPagerActivity"></activity>
     </application>
 
 </manifest>
