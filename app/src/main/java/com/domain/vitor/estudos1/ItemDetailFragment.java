@@ -14,6 +14,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+//Fragmento da ItemDetailPagerActivity que mostra os detalhes de um item da lista.
+
 public class ItemDetailFragment extends Fragment {
     private Item myItem;
 

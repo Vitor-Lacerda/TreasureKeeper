@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 
+//Classe dos itens magicos que sao mostrados
 
 public class Item implements Parcelable {
 
@@ -16,10 +17,10 @@ public class Item implements Parcelable {
 
     public enum Category {
         ARMOR("Armor"),//0
-        POTION("Consumable(Potion)"),//1
+        POTION("Potion"),//1
         RING("Ring"),//2
         ROD("Rod"),//3
-        SCROLL("Consumable(Scroll)"),//4
+        SCROLL("Scroll"),//4
         STAFF("Staff"),//5
         WAND("Wand"),//6
         WEAPON("Weapon"),//7
@@ -69,6 +70,7 @@ public class Item implements Parcelable {
 
 
 
+    //Construtor itens sem tabela
 
     public Item(String _name, int page, Category _cat, String _type, Rarity _rarity, boolean req_attunement, String _attunement, String _description) {
         item_name = _name;
@@ -98,6 +100,8 @@ public class Item implements Parcelable {
 
     }
 
+
+    //Construtor itens com tabela.
     public Item(String _name, int page, Category _cat, String _subType, Rarity _rarity, boolean req_attunement, String _attunement,
                 String _description, int rows, int columns, String[][] tableContent) {
 
@@ -109,6 +113,8 @@ public class Item implements Parcelable {
 
     }
 
+
+    //Metodos da interface Parcelable
 
     protected Item(Parcel in) {
         requires_attunement = in.readByte() != 0;

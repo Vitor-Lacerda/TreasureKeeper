@@ -8,6 +8,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+//Atividade obsoleta. Foi trocada por ItemDetailPagerActivity
+
 
 public class ItemDetailActivity extends AppCompatActivity {
 

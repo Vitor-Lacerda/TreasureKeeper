@@ -8,4 +8,23 @@
     <string name="sort_by_name_button">Sort by name</string>
     <string name="sort_by_rarity_button">Sort by rarity</string>
     <string name="sort_by_category_button">Sort by category</string>
+    <string name="armor">Armor</string>
+    <string name="potion">Potion</string>
+    <string name="ring">Ring</string>
+    <string name="rod">Rod</string>
+    <string name="scroll">Scroll</string>
+    <string name="staff">Staff</string>
+    <string name="wand">Wand</string>
+    <string name="weapon">Weapon</string>
+    <string name="wondrous">Wondrous</string>
+    <string name="common">Common</string>
+    <string name="uncommon">Uncommon</string>
+    <string name="rare">Rare</string>
+    <string name="very_rare">Very Rare</string>
+    <string name="legendary">Legendary</string>
+    <string name="category">Category</string>
+    <string name="rarity">Rarity</string>
+    <string name="clear">Clear</string>
+    <string name="ok">OK</string>
+
 </resources>

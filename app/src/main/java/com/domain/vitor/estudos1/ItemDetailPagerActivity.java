@@ -13,6 +13,9 @@ import android.os.Bundle;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+//Essa atividade mostra uma lista de items magicos, um de cada vez, atraves dos Fragments.
+//Recebe no intent uma lista de itens e um int que a posicao do primeiro item a ser mostrado.
+
 public class ItemDetailPagerActivity extends FragmentActivity {
 
 
@@ -25,6 +28,7 @@ public class ItemDetailPagerActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail_pager);
 
+        //Pega a lista e a posicao do intent.
         Bundle b = this.getIntent().getExtras();
         ArrayList<Item> items = new ArrayList<Item>();
         int itemPosition = 0;

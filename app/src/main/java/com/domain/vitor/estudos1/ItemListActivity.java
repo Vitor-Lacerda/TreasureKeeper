@@ -1,11 +1,17 @@
 package com.domain.vitor.estudos1;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,7 +19,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,8 +35,9 @@ public class ItemListActivity extends ListActivity {
     private final Item.Category[] categoryValues = Item.Category.values();
     private final Item.Rarity[] rarityValues = Item.Rarity.values();
 
-    private ArrayList<Item> displayedItems;
+    private ArrayList<Item> displayedItems; //lista a ser mostrada.
     private ArrayList<Item> jsonItems;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +45,13 @@ public class ItemListActivity extends ListActivity {
         setContentView(R.layout.activity_item_list);
         setButtons();
        // ArrayList<Item> items = makeItemList();
-        jsonItems = makeItemListFromJSON();
+        jsonItems = makeItemListFromJSON(); //Lista original igual a do JSON.
 
         displayedItems = jsonItems;
 
-        myAdapter = new ItemAdapter(this, displayedItems);
+        myAdapter = new ItemAdapter(this, jsonItems);
         setListAdapter(myAdapter);
-        sortItemsByName();
+        myAdapter.sortItemsByName();
 
 
 
@@ -56,7 +62,7 @@ public class ItemListActivity extends ListActivity {
         byName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sortItemsByName();
+                myAdapter.sortItemsByName();
             }
         });
 
@@ -64,7 +70,7 @@ public class ItemListActivity extends ListActivity {
         byCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sortItemsByCategory();
+                myAdapter.sortItemsByCategory();
             }
         });
 
@@ -72,9 +78,11 @@ public class ItemListActivity extends ListActivity {
         byRariry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sortItemsByRarity();
+                myAdapter.sortItemsByRarity();
             }
         });
+
+
 
     }
 
@@ -84,10 +92,7 @@ public class ItemListActivity extends ListActivity {
         Intent i = new Intent();
         Bundle b = new Bundle();
 
-        //Item clickedItem = (Item) getListAdapter().getItem(position);
-
-        //b.putSerializable("ITEM_KEY", clickedItem);
-        //i.setClass(this, ItemDetailActivity.class);
+        //Abre a ItemDetailPagerActivity passando displayedItems como a lista e posicao do clique.
         b.putParcelableArrayList(getResources().getString(R.string.intent_item_list_key), displayedItems);
         b.putInt(getResources().getString(R.string.intent_item_index_key), position);
         i.setClass(this, ItemDetailPagerActivity.class);
@@ -98,57 +103,165 @@ public class ItemListActivity extends ListActivity {
 
     }
 
+    public void onCheckBoxFilterClick(View v){
 
 
+        boolean checked = ((CheckBox) v).isChecked();
 
-
-    private void sortItemsByName(){
-        Collections.sort(displayedItems, new Comparator<Item>() {
-            @Override
-            public int compare(Item o1, Item o2) {
-                return o1.item_name.compareTo(o2.item_name);
-            }
-        });
-        myAdapter.setDataSource(displayedItems);
-        setListAdapter(myAdapter);
-    }
-
-    private void sortItemsByCategory(){
-        Collections.sort(displayedItems, new Comparator<Item>() {
-            @Override
-            public int compare(Item o1, Item o2) {
-                if(o1.category == o2.category){
-                    if(o1.rarity == o2.rarity){
-                        return o1.item_name.compareTo(o2.item_name);
-                    }
-                    return o1.rarity.compareTo(o2.rarity);
+        switch (v.getId()){
+            case R.id.check_armor:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.ARMOR);
                 }
-                return o1.category.compareTo(o2.category);
-
-            }
-        });
-        myAdapter.setDataSource(displayedItems);
-        setListAdapter(myAdapter);
-    }
-
-    private void sortItemsByRarity(){
-        Collections.sort(displayedItems, new Comparator<Item>() {
-            @Override
-            public int compare(Item o1, Item o2) {
-                if(o1.rarity == o2.rarity){
-                    if(o1.category == o2.category){
-                        return o1.item_name.compareTo(o2.item_name);
-                    }
-                    return o1.category.compareTo(o2.category);
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.ARMOR);
                 }
-                return o1.rarity.compareTo(o2.rarity);
-            }
-        });
-        myAdapter.setDataSource(displayedItems);
-        setListAdapter(myAdapter);
+                break;
+            case R.id.check_potion:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.POTION);
+                }
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.POTION);
+                }
+                break;
+            case R.id.check_ring:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.RING);
+                }
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.RING);
+                }
+                break;
+            case R.id.check_rod:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.ROD);
+                }
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.ROD);
+                }
+                break;
+            case R.id.check_scroll:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.SCROLL);
+                }
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.SCROLL);
+                }
+                break;
+            case R.id.check_staff:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.STAFF);
+                }
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.STAFF);
+                }
+                break;
+            case R.id.check_wand:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.WAND);
+                }
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.WAND);
+                }
+                break;
+            case R.id.check_weapon:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.WEAPON);
+                }
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.WEAPON);
+                }
+                break;
+            case R.id.check_wondrous:
+                if(checked) {
+                    myAdapter.addCategoryFilter(Item.Category.WONDROUS);
+                }
+                else {
+                    myAdapter.removeCategoryFilter(Item.Category.WONDROUS);
+                }
+                break;
+
+            case R.id.check_common:
+                if(checked) {
+                    myAdapter.addRarityFilter(Item.Rarity.COMMON);
+                }
+                else {
+                    myAdapter.removeRarityFilter(Item.Rarity.COMMON);
+                }
+                break;
+            case R.id.check_uncommon:
+                if(checked) {
+                    myAdapter.addRarityFilter(Item.Rarity.UNCOMMON);
+                }
+                else {
+                    myAdapter.removeRarityFilter(Item.Rarity.UNCOMMON);
+                }
+                break;
+            case R.id.check_rare:
+                if(checked) {
+                    myAdapter.addRarityFilter(Item.Rarity.RARE);
+                }
+                else {
+                    myAdapter.removeRarityFilter(Item.Rarity.RARE);
+                }
+                break;
+            case R.id.check_very_rare:
+                if(checked) {
+                    myAdapter.addRarityFilter(Item.Rarity.VERY_RARE);
+                }
+                else {
+                    myAdapter.removeRarityFilter(Item.Rarity.VERY_RARE);
+                }
+                break;
+            case R.id.check_legendary:
+                if(checked) {
+                    myAdapter.addRarityFilter(Item.Rarity.LEGENDARY);
+                }
+                else {
+                    myAdapter.removeRarityFilter(Item.Rarity.LEGENDARY);
+                }
+                break;
+
+
+        }
+
+        Filter f = myAdapter.getFilter();
+        f.filter("a");
+        //myAdapter.sortBySortMode();
 
     }
 
+
+    public void onOpenFiltersClick(View v) {
+        //Abrir e fechar tela de filtros
+        LinearLayout fl = (LinearLayout)findViewById(R.id.filter_layout);
+        if(fl.getVisibility() == View.VISIBLE){
+            fl.setVisibility(View.GONE);
+        }
+        else{
+            fl.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void onClearFiltersClick(View v){
+
+        LinearLayout catChecks = (LinearLayout)findViewById(R.id.category_checks);
+        LinearLayout rareChecks = (LinearLayout)findViewById(R.id.rarity_checks);
+
+        //Pula a 0 que e o texto
+        for(int i = 1; i<catChecks.getChildCount(); i++){
+            ((CheckBox)catChecks.getChildAt(i)).setChecked(false);
+        }
+
+        //Pula a 0 que e o texto
+        for(int j = 1; j<rareChecks.getChildCount(); j++){
+            ((CheckBox)rareChecks.getChildAt(j)).setChecked(false);
+        }
+
+        myAdapter.clearFilters();
+        myAdapter.getFilter().filter("a");
+    }
 
     /*
     ArrayList<Item> makeItemList(){
