@@ -35,9 +35,6 @@ public class ItemListActivity extends ListActivity {
     private final Item.Category[] categoryValues = Item.Category.values();
     private final Item.Rarity[] rarityValues = Item.Rarity.values();
 
-    private ArrayList<Item> displayedItems; //lista a ser mostrada.
-    private ArrayList<Item> jsonItems;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +42,7 @@ public class ItemListActivity extends ListActivity {
         setContentView(R.layout.activity_item_list);
         setButtons();
        // ArrayList<Item> items = makeItemList();
-        jsonItems = makeItemListFromJSON(); //Lista original igual a do JSON.
-
-        displayedItems = jsonItems;
+        ArrayList<Item> jsonItems = makeItemListFromJSON(); //Lista original igual a do JSON.
 
         myAdapter = new ItemAdapter(this, jsonItems);
         setListAdapter(myAdapter);
@@ -93,7 +88,7 @@ public class ItemListActivity extends ListActivity {
         Bundle b = new Bundle();
 
         //Abre a ItemDetailPagerActivity passando displayedItems como a lista e posicao do clique.
-        b.putParcelableArrayList(getResources().getString(R.string.intent_item_list_key), displayedItems);
+        b.putParcelableArrayList(getResources().getString(R.string.intent_item_list_key), myAdapter.getDataSource());
         b.putInt(getResources().getString(R.string.intent_item_index_key), position);
         i.setClass(this, ItemDetailPagerActivity.class);
 
