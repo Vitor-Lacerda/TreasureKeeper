@@ -1,17 +1,18 @@
 package com.domain.vitor.estudos1;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Filter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,8 +21,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 
 //Essa activity mostra uma lista dos itens magicos do DMG
@@ -34,6 +33,8 @@ public class ItemListActivity extends ListActivity {
 
     private final Item.Category[] categoryValues = Item.Category.values();
     private final Item.Rarity[] rarityValues = Item.Rarity.values();
+    private CharSequence searchSequence;
+    private boolean sideMenuOpen = false;
 
 
     @Override
@@ -43,6 +44,8 @@ public class ItemListActivity extends ListActivity {
         setButtons();
        // ArrayList<Item> items = makeItemList();
         ArrayList<Item> jsonItems = makeItemListFromJSON(); //Lista original igual a do JSON.
+        searchSequence = "";
+
 
         myAdapter = new ItemAdapter(this, jsonItems);
         setListAdapter(myAdapter);
@@ -77,6 +80,25 @@ public class ItemListActivity extends ListActivity {
             }
         });
 
+        final EditText searchText = (EditText)findViewById(R.id.list_search_bar);
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchSequence = s;
+                myAdapter.getFilter().filter(searchSequence);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
     }
@@ -217,12 +239,31 @@ public class ItemListActivity extends ListActivity {
                     myAdapter.removeRarityFilter(Item.Rarity.LEGENDARY);
                 }
                 break;
+            case R.id.check_requires_att:
+                if(checked){
+                    myAdapter.setReq_attunement(1);
+                    ((CheckBox)findViewById(R.id.check_no_att)).setChecked(false);
+                }
+                else{
+                    myAdapter.setReq_attunement(0);
+                }
+                break;
+
+            case R.id.check_no_att:
+                if(checked){
+                    myAdapter.setReq_attunement(-1);
+                    ((CheckBox)findViewById(R.id.check_requires_att)).setChecked(false);
+                }
+                else{
+                    myAdapter.setReq_attunement(0);
+                }
+                break;
 
 
         }
 
         Filter f = myAdapter.getFilter();
-        f.filter("a");
+        f.filter(searchSequence);
         //myAdapter.sortBySortMode();
 
     }
@@ -251,11 +292,30 @@ public class ItemListActivity extends ListActivity {
 
         //Pula a 0 que e o texto
         for(int j = 1; j<rareChecks.getChildCount(); j++){
-            ((CheckBox)rareChecks.getChildAt(j)).setChecked(false);
+            try {
+                ((CheckBox) rareChecks.getChildAt(j)).setChecked(false);
+            }
+            catch (Exception e){
+                //Faz nada mesmo
+            }
         }
 
         myAdapter.clearFilters();
-        myAdapter.getFilter().filter("a");
+        myAdapter.getFilter().filter(searchSequence);
+    }
+
+
+    public void onClickSideMenu(View v){
+        if(!sideMenuOpen){
+            sideMenuOpen = true;
+            ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.closemenutab));
+            //findViewById(R.id.side_menu).setVisibility(View.VISIBLE);
+        }
+        else{
+            sideMenuOpen = false;
+            ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.ic_action_name));
+        }
+
     }
 
     /*

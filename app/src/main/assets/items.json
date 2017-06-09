@@ -548,7 +548,7 @@
 	  "name":"Belt of Hill Giant Strength",
 	  "page":155,
 	  "category":8,
-	  "type":"",
+	  "type":"belt of giant strength",
 	  "rarity":2,
 	  "req_attunement":true,
 	  "attunement":"",
@@ -559,7 +559,7 @@
 	  "name":"Belt of Stone/Frost Giant Strength",
 	  "page":155,
 	  "category":8,
-	  "type":"",
+	  "type":"belt of giant strength",
 	  "rarity":2,
 	  "req_attunement":true,
 	  "attunement":"",
@@ -570,7 +570,7 @@
 	  "name":"Belt of Fire Giant Strength",
 	  "page":155,
 	  "category":8,
-	  "type":"",
+	  "type":"belt of giant strength",
 	  "rarity":3,
 	  "req_attunement":true,
 	  "attunement":"",
@@ -581,7 +581,7 @@
 	  "name":"Belt of Cloud Giant Strength",
 	  "page":155,
 	  "category":8,
-	  "type":"",
+	  "type":"belt of giant strength",
 	  "rarity":4,
 	  "req_attunement":true,
 	  "attunement":"",
@@ -592,7 +592,7 @@
 	  "name":"Belt of Storm Giant Strength",
 	  "page":155,
 	  "category":8,
-	  "type":"",
+	  "type":"belt of giant strength",
 	  "rarity":4,
 	  "req_attunement":true,
 	  "attunement":"",
@@ -975,7 +975,7 @@
 	  "name":"Crystal Ball",
 	  "page":159,
 	  "category":8,
-	  "type":"",
+	  "type":"crystal ball",
 	  "rarity":3,
 	  "req_attunement":true,
 	  "attunement":"",
@@ -986,7 +986,7 @@
 	  "name":"Crystal Ball of Mind Reading",
 	  "page":159,
 	  "category":8,
-	  "type":"",
+	  "type":"crystal ball",
 	  "rarity":4,
 	  "req_attunement":true,
 	  "attunement":"",
@@ -997,7 +997,7 @@
 	  "name":"Crystal Ball of Telepathy",
 	  "page":159,
 	  "category":8,
-	  "type":"",
+	  "type":"crystal ball",
 	  "rarity":4,
 	  "req_attunement":true,
 	  "attunement":"",
@@ -1008,11 +1008,118 @@
 	  "name":"Crystal Ball of True Seeing",
 	  "page":159,
 	  "category":8,
-	  "type":"",
+	  "type":"crystal ball",
 	  "rarity":4,
 	  "req_attunement":true,
 	  "attunement":"",
 	  "description":"While touching this <em>crystal </em><em>ball</em>, you can cast the <em>scrying </em>spell(save DC 17). While scrying with the crystal ball, you have truesight with a radius of 120 feet centered on the spell's sensor.",
+	  "table":false
+	 },
+	 {
+	  "name":"Cube of Force",
+	  "page":159,
+	  "category":8,
+	  "type":"",
+	  "rarity":2,
+	  "req_attunement":true,
+	  "attunement":"",
+	  "description":"This cube is about an inch across. Each face has a distinct marking on it that can be pressed. The cube starts with 36 charges, and it regains 1d20 expended charges daily at dawn.<br>&emsp;You can use an action to press one of the cube's faces, expending a number of charges based on the chosen face, as shown in the Cube of Force Faces table. Each face has a different effect. If the cube has insufficient charges remaining, nothing happens. Otherwise, a barrier of invisible force springs into existence, forming a cube 15 feet on a side. The barrier is centered on you, moves with you, and lasts for 1 minute, until you use an action to press the cube's sixth face, or the cube runs out of charges. You can change the barrier's effect by pressing a different face of the cube and expending the requisite number of charges, resetting the duration.<br>&emsp; If your movement causes the barrier to come into contact with a solid object that can't pass through the cube, you can't move any closer to that object as long as the barrier remains.<br>&emsp;The cube loses charges when the barrier is targeted by certain spells or comes into contact with certain spell or magic item effects, as shown below.<br><br>&emsp;<em>Disintegrate</em>:1d12 charges<br>&emsp;<em>Horn </em><em>of </em><em>blasting</em>:1d10 charges<br>&emsp;<em>Passwall</em>:1d6 charges<br>&emsp;<em>Prismatic </em><em>Spray</em>:1d20 charges<br>&emsp;<em>Wall </em><em>of </em><em>Fire</em>:1d4 charges<br><br>",
+	  "table":true,
+	  "rows":7,
+	  "cols":3,
+	  "table_contents":[
+		{
+			"col0":"Face",
+			"col1":"Charges Spent",
+			"col2":"Effect"
+		},
+		{
+			"col0":"1",
+			"col1":"1",
+			"col2":"Gases, wind, and fog can't pass through the barrier."
+		},
+		{
+			"col0":"2",
+			"col1":"2",
+			"col2":"Nonliving matter can't pass through the barrier. Walls, floors, and ceilings can pass through at your discretion."
+		},
+		{
+			"col0":"3",
+			"col1":"3",
+			"col2":"Living matter can't pass through the barrier."
+		},
+		{
+			"col0":"4",
+			"col1":"4",
+			"col2":"Spell effects can't pass through the barrier."
+		},
+		{
+			"col0":"5",
+			"col1":"5",
+			"col2":"Nothing can pass through the barrier. Walls, floors , and ceilings can pass through at your discretion."
+		},
+		{
+			"col0":"6",
+			"col1":"0",
+			"col2":"The barrier deactivates."
+		}
+	  
+	  
+	  ]
+	 },
+	 {
+	  "name":"Cubic Gate",
+	  "page":160,
+	  "category":8,
+	  "type":"",
+	  "rarity":4,
+	  "req_attunement":false,
+	  "attunement":"",
+	  "description":"This cube is 3 inches across and radiates palpable magical energy. The six sides of the cube are each keyed to a different plane of existence, one of which is the Material Plane. The other sides are linked to planes determined by the DM.<br>&emsp; You can use an action to press one side of the cube to cast the <em>gate </em>spell with it, opening a portal to the plane keyed to that side. Alternatively, if you use an action to press one side twice, you can cast the <em>plane </em><em>shift </em>spell (save DC 17) with the cube and transport the targets to the plane keyed to that side.<br>&emsp;The cube has 3 charges. Each use of the cube expends 1 charge. The cube regains ld3 expended charges daily at dawn.",
+	  "table":false
+	 },
+	 {
+	  "name":"Daern's Instant Fortress",
+	  "page":160,
+	  "category":8,
+	  "type":"",
+	  "rarity":2,
+	  "req_attunement":false,
+	  "attunement":"",
+	  "description":"You can use an action to place this l-inch metal cube on the ground and speak its command word. The cube rapidly grows into a fortress that remains until you use an action to speak the command word that dismisses ir. which works only if the fortress is empty.<br>&emsp; The fortress is a square tower, 20 feet on a side and 30 feet high, with arrow slits on all sides and a battlement atop it. Its interior is divided into two floors. with a ladder running along one wall to connect them. The ladder ends at a trapdoor leading to the roof. When activated, the tower has a small door on the side facing you. The door opens only at your command, which you can speak as a bonus action. It is immune to the <em>knock </em>spell and similar magic, such as that of a <em>chime </em><em>of </em><em>opening</em><br>&emsp;. Each creature in the area where the fortress appears must make a DC 15 Dexterity saving throw, taking lOdlO bludgeoning damage on a failed save, or half as much damage on a successful one. In either case, the creature is pushed to an unoccupied space outside but next to the fortress. Objects in the area that aren't being worn or carried take this damage and are pushed automatically.<br>&emsp;The tower is made of adamantine, and its magic prevents it from being tipped over. The roof, the door, and the walls each have 100 hit points, immunity to damage from nonmagical weapons excluding siege weapons, and resistance to all other damage. Only a <em>wish </em>spell can repair the fortress (this use of the spell counts as replicating a spell of 8th level or lower). Each casting of <em>wish </em>causes the roof, the door, or one wall to regain 50 hit points.",
+	  "table":false
+	 },
+	 {
+	  "name":"Dagger of Venom",
+	  "page":161,
+	  "category":7,
+	  "type":"dagger",
+	  "rarity":2,
+	  "req_attunement":false,
+	  "attunement":"",
+	  "description":"You gain a +1 bonus to attack and damage rolls made with this magic weapon.<br>&emsp; You can use an action to cause thick, black poison to coat the blade. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a DC 15 Constitution saving throw or take 2d10 poison damage and become poisoned for 1 minute. The dagger can't be used this way again until the next dawn.",
+	  "table":false
+	 },
+	 {
+	  "name":"Dancing Sword",
+	  "page":161,
+	  "category":7,
+	  "type":"any sword",
+	  "rarity":3,
+	  "req_attunement":true,
+	  "attunement":"",
+	  "description":"You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.<br>&emsp; While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause rhe sword to attack one creature within 5 feet of it.<br>&emsp; After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it.",
+	  "table":false
+	 },
+	 {
+	  "name":"Decanter of Endless Water",
+	  "page":161,
+	  "category":8,
+	  "type":"",
+	  "rarity":1,
+	  "req_attunement":false,
+	  "attunement":"",
+	  "description":"This stoppered flask sloshes when shaken, as if it contains water. The decanter weighs 2 pounds.<br>&emsp; You can use an action to remove the stopper and speak one of three command words, whereupon an amount of fresh water or salt water (your choice) pours out of the flask. The water stops pouring out at the start of your next turn. Choose from the following options:<br><br>-\"Stream\" produces 1 gallon of water.<br>-\"Fountain\" produces 5 gallons of water.<br>-\"Geyser\" produces 30 gallons of water that gushes forth in a geyser 30 feet long and 1 foot wide. As a bonus action while holding the decanter, you can aim the geyser at a creature you can see within 30 feet of you. The target must succeed on a DC 13 Strength saving throw or take 1d4 bludgeoning damage and fall prone. Instead of a creature, you can target an object that isn't being worn or carried and that weighs no more than 200 pounds. The object is either knocked over or pushed up to 15 feet away from you.",
 	  "table":false
 	 }
 	 

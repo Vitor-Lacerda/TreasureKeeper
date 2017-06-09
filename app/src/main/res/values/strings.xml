@@ -2,6 +2,7 @@
     <string name="app_name">Treasure Keeper</string>
     <string name="title_item_list">List of Magic Items</string>
     <string name="title_activity_item_detail">ItemDetailActivity</string>
+    <string name="random_treasure">Random Treasure</string>
     <string name="dmg_book_name">DMG</string>
     <string name="intent_item_list_key">ITEM_LIST_KEY</string>
     <string name="intent_item_index_key">ITEM_INDEX_KEY</string>
@@ -26,5 +27,8 @@
     <string name="rarity">Rarity</string>
     <string name="clear">Clear</string>
     <string name="ok">OK</string>
+    <string name="attunement">Attunement</string>
+    <string name="requires">Requires</string>
+    <string name="doesnt_require">Doesn\'t Require</string>
 
 </resources>

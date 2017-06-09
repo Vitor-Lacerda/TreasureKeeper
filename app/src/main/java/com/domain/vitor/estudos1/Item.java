@@ -83,7 +83,7 @@ public class Item implements Parcelable {
         description = _description;
 
         String short_description = category.toString();
-        if(category == Item.Category.ARMOR || category == Item.Category.WEAPON){
+        if(!_type.isEmpty()){
             short_description = short_description.concat(" (" + item_type + ")");
         }
         short_description = short_description.concat(", " + rarity.toString());

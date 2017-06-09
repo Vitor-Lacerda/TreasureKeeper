@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+
 //Adapter pra listview da ListActivity
 
 public class ItemAdapter extends BaseAdapter implements Filterable {
@@ -87,6 +88,14 @@ public class ItemAdapter extends BaseAdapter implements Filterable {
         else {
             filter.clearFilter();
         }
+    }
+
+    public  void setReq_attunement(int i){
+        if(filter == null){
+            filter = new MyItemFilter(this);
+        }
+        filter.setReq_attunement(i);
+
     }
 
     public void setSortMode(SortMode s){sortMode = s;}
@@ -276,6 +285,7 @@ class MyItemFilter extends Filter{
 
     private ArrayList<Item.Category> categories;
     private ArrayList<Item.Rarity> rarities;
+    private int req_attunement = 0; //-1 - Sem Attunement/ 0 tanto faz / 1 precisa
     private ItemAdapter mAdapter;
 
     public MyItemFilter(ItemAdapter adapter){
@@ -287,28 +297,22 @@ class MyItemFilter extends Filter{
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
         FilterResults results = new FilterResults();
-        if(categories.size() == 0 && rarities.size() == 0){
+        if(categories.size() == 0 && rarities.size() == 0 && constraint.length() == 0 && req_attunement == 0){
             results.values = mAdapter.getOriginalDataSource();
             results.count = mAdapter.getOriginalCount();
         }
         else{
             ArrayList<Item> filteredItems = new ArrayList<Item>();
-            if(categories.size() == 0){
-                for (Item i:mAdapter.getOriginalDataSource()) {
-                    if(rarities.contains(i.rarity)){
-                        filteredItems.add(i);
-                    }
-                }
-            }
-            else {
-                for (Item i:mAdapter.getOriginalDataSource()) {
-                    if(categories.contains(i.category)){
-                        if(rarities.size() == 0 || rarities.contains(i.rarity)) {
-                            filteredItems.add(i);
+            for (Item i:mAdapter.getOriginalDataSource()) {
+                if(categories.size() == 0 || categories.contains(i.category)){
+                    if(rarities.size() == 0 || rarities.contains(i.rarity)) {
+                        if(req_attunement == 0 || (req_attunement == 1 && i.requires_attunement) || (req_attunement == -1 && !i.requires_attunement)) {
+                            if(constraint.length() == 0 || searchText(i, constraint)) {
+                                filteredItems.add(i);
+                            }
                         }
-                    }
+                   }
                 }
-
             }
 
             results.values = filteredItems;
@@ -326,6 +330,18 @@ class MyItemFilter extends Filter{
             mAdapter.sortBySortMode();
     }
 
+    private boolean searchText(Item i, CharSequence constraint){
+        if(i.item_name.toLowerCase().contains(constraint.toString().toLowerCase())){
+            return true;
+        }
+
+        if(i.item_type.toLowerCase().contains(constraint.toString().toLowerCase())){
+            return true;
+        }
+
+        return false;
+    }
+
     public void addCategoryFilter(Item.Category c){if(!categories.contains(c))categories.add(c);}
 
     public void removeCategoryFilter(Item.Category c){categories.remove(c);}
@@ -334,5 +350,7 @@ class MyItemFilter extends Filter{
 
     public void removeRarityFilter(Item.Rarity c){rarities.remove(c);}
 
-    public void clearFilter(){rarities.clear(); categories.clear();}
+    public void clearFilter(){rarities.clear(); categories.clear(); req_attunement = 0;}
+
+    public void setReq_attunement(int i){req_attunement = i;}
 }
