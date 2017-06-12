@@ -2,43 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/activatedBackgroundIndicator"
-    tools:context="com.domain.vitor.estudos1.ItemListActivity"
+    tools:context="com.domain.vitor.estudos1.ItemListFragment"
     android:animateLayoutChanges="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/backgroundColor"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin">
-
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_action_name"
-            android:background="@color/backgroundColor"
-            android:onClick="onClickSideMenu"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/backgroundColor"
-            android:text="@string/title_item_list"
-            android:textSize="@dimen/title_text_size"
-            android:textColor="@color/whiteText"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -104,7 +73,7 @@
             android:layout_weight=".8"
             android:text="Filters"
             android:id="@+id/open_filters_button"
-            android:onClick="onOpenFiltersClick"/>
+           />
 
     </LinearLayout>
 
@@ -143,55 +112,46 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/armor"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_armor"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/potion"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_potion"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ring"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_ring"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rod"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_rod"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/scroll"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_scroll"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/staff"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_staff"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/wand"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_wand"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/weapon"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_weapon"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/wondrous"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_wondrous"/>
             </LinearLayout>
             <LinearLayout
@@ -213,35 +173,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/common"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_common"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/uncommon"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_uncommon"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rare"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_rare"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/very_rare"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_very_rare"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/legendary"
-                    android:onClick="onCheckBoxFilterClick"
                     android:id="@+id/check_legendary"/>
 
                 <TextView
@@ -257,15 +212,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/requires"
                     android:id="@+id/check_requires_att"
-                    android:onClick="onCheckBoxFilterClick"
                     />
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/doesnt_require"
-                    android:id = "@+id/check_no_att"
-                    android:onClick="onCheckBoxFilterClick"
+                    android:id="@+id/check_no_att"
                     />
 
             </LinearLayout>
@@ -283,7 +236,7 @@
                 android:layout_weight="1"
                 android:text="@string/clear"
                 android:gravity="center"
-                android:onClick="onClearFiltersClick"
+                android:id="@+id/clear_filters_button"
                 />
 
             <Button
@@ -292,7 +245,7 @@
                 android:layout_weight="1"
                 android:text="@string/ok"
                 android:gravity="center"
-                android:onClick="onOpenFiltersClick"/>
+                android:id = "@+id/ok_filters_button"/>
 
 
 
@@ -312,7 +265,7 @@
         android:layout_height="match_parent"
         android:choiceMode="singleChoice"
         android:listSelector="@android:drawable/list_selector_background"
-        android:id = "@android:id/list">
+        android:id="@+id/magic_item_list">
     </ListView>
 
 

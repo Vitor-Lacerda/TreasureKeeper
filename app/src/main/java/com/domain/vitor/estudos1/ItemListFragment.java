@@ -1,11 +1,17 @@
 package com.domain.vitor.estudos1;
 
+import android.app.Fragment;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -25,9 +31,7 @@ import java.util.ArrayList;
 
 //Essa activity mostra uma lista dos itens magicos do DMG
 
-//Essa activity e a primeira Activity que abre no momento.
-
-public class ItemListActivity extends ListActivity {
+public class ItemListFragment extends Fragment {
 
     private ItemAdapter myAdapter;
 
@@ -36,27 +40,64 @@ public class ItemListActivity extends ListActivity {
     private CharSequence searchSequence;
     private boolean sideMenuOpen = false;
 
+    //construtor vazio exigido
+    public ItemListFragment(){
+
+    }
+
+    //Metodo fabrica, pra fazer uma nova passando parametro
+    public static ItemListFragment newInstance() {
+        ItemListFragment fragment = new ItemListFragment();
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_list);
-        setButtons();
-       // ArrayList<Item> items = makeItemList();
-        ArrayList<Item> jsonItems = makeItemListFromJSON(); //Lista original igual a do JSON.
-        searchSequence = "";
 
-
-        myAdapter = new ItemAdapter(this, jsonItems);
-        setListAdapter(myAdapter);
-        myAdapter.sortItemsByName();
 
 
 
     }
 
-    private void setButtons(){
-        Button byName = (Button)findViewById(R.id.sort_by_name_button);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        LinearLayout mainLayout = (LinearLayout)inflater.inflate(R.layout.activity_item_list, container, false);
+        ListView listView = (ListView)mainLayout.findViewById(R.id.magic_item_list);
+
+        setButtons(mainLayout);
+        // ArrayList<Item> items = makeItemList();
+        ArrayList<Item> jsonItems = makeItemListFromJSON(); //Lista original igual a do JSON.
+        searchSequence = "";
+
+
+        myAdapter = new ItemAdapter(mainLayout.getContext(), jsonItems);
+        listView.setAdapter(myAdapter);
+        myAdapter.sortItemsByName();
+
+        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent();
+                Bundle b = new Bundle();
+
+                //Abre a ItemDetailPagerActivity passando displayedItems como a lista e posicao do clique.
+                b.putParcelableArrayList(getResources().getString(R.string.intent_item_list_key), myAdapter.getDataSource());
+                b.putInt(getResources().getString(R.string.intent_item_index_key), position);
+                i.setClass(view.getContext(), ItemDetailPagerActivity.class);
+
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
+
+        return mainLayout;
+    }
+
+    private void setButtons(final View mainView){
+        Button byName = (Button)mainView.findViewById(R.id.sort_by_name_button);
         byName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +105,7 @@ public class ItemListActivity extends ListActivity {
             }
         });
 
-        Button byCategory = (Button)findViewById(R.id.sort_by_category_button);
+        Button byCategory = (Button)mainView.findViewById(R.id.sort_by_category_button);
         byCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +113,7 @@ public class ItemListActivity extends ListActivity {
             }
         });
 
-        Button byRariry = (Button)findViewById(R.id.sort_by_rarity_button);
+        Button byRariry = (Button)mainView.findViewById(R.id.sort_by_rarity_button);
         byRariry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +121,7 @@ public class ItemListActivity extends ListActivity {
             }
         });
 
-        final EditText searchText = (EditText)findViewById(R.id.list_search_bar);
+        final EditText searchText = (EditText)mainView.findViewById(R.id.list_search_bar);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -100,27 +141,78 @@ public class ItemListActivity extends ListActivity {
             }
         });
 
+        Button openFilters = (Button)mainView.findViewById(R.id.open_filters_button);
+        View.OnClickListener openCloseFilters = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOpenFiltersClick(mainView);
+            }
+        };
+        openFilters.setOnClickListener(openCloseFilters);
+
+        Button okFilters = (Button)mainView.findViewById(R.id.ok_filters_button);
+        okFilters.setOnClickListener(openCloseFilters);
+
+        Button clearFilters = (Button)mainView.findViewById(R.id.clear_filters_button);
+        clearFilters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClearFiltersClick(mainView);
+            }
+        });
+
+        View.OnClickListener checkBoxClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCheckBoxFilterClick(mainView,v);
+            }
+        };
+
+        CheckBox checkBox = (CheckBox)mainView.findViewById(R.id.check_armor);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_potion);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_ring);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_rod);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_scroll);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_staff);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_wand);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_weapon);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_wondrous);
+        checkBox.setOnClickListener(checkBoxClickListener);
+
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_common);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_uncommon);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_rare);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_very_rare);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_legendary);
+        checkBox.setOnClickListener(checkBoxClickListener);
+
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_requires_att);
+        checkBox.setOnClickListener(checkBoxClickListener);
+        checkBox = (CheckBox)mainView.findViewById(R.id.check_no_att);
+        checkBox.setOnClickListener(checkBoxClickListener);
+
+
+
+
+
 
     }
 
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent i = new Intent();
-        Bundle b = new Bundle();
 
-        //Abre a ItemDetailPagerActivity passando displayedItems como a lista e posicao do clique.
-        b.putParcelableArrayList(getResources().getString(R.string.intent_item_list_key), myAdapter.getDataSource());
-        b.putInt(getResources().getString(R.string.intent_item_index_key), position);
-        i.setClass(this, ItemDetailPagerActivity.class);
-
-        i.putExtras(b);
-        startActivity(i);
-
-
-    }
-
-    public void onCheckBoxFilterClick(View v){
+    public void onCheckBoxFilterClick(View main, View v){
 
 
         boolean checked = ((CheckBox) v).isChecked();
@@ -242,7 +334,7 @@ public class ItemListActivity extends ListActivity {
             case R.id.check_requires_att:
                 if(checked){
                     myAdapter.setReq_attunement(1);
-                    ((CheckBox)findViewById(R.id.check_no_att)).setChecked(false);
+                    ((CheckBox)main.findViewById(R.id.check_no_att)).setChecked(false);
                 }
                 else{
                     myAdapter.setReq_attunement(0);
@@ -252,7 +344,7 @@ public class ItemListActivity extends ListActivity {
             case R.id.check_no_att:
                 if(checked){
                     myAdapter.setReq_attunement(-1);
-                    ((CheckBox)findViewById(R.id.check_requires_att)).setChecked(false);
+                    ((CheckBox)main.findViewById(R.id.check_requires_att)).setChecked(false);
                 }
                 else{
                     myAdapter.setReq_attunement(0);
@@ -271,7 +363,7 @@ public class ItemListActivity extends ListActivity {
 
     public void onOpenFiltersClick(View v) {
         //Abrir e fechar tela de filtros
-        LinearLayout fl = (LinearLayout)findViewById(R.id.filter_layout);
+        LinearLayout fl = (LinearLayout)v.findViewById(R.id.filter_layout);
         if(fl.getVisibility() == View.VISIBLE){
             fl.setVisibility(View.GONE);
         }
@@ -282,8 +374,8 @@ public class ItemListActivity extends ListActivity {
 
     public void onClearFiltersClick(View v){
 
-        LinearLayout catChecks = (LinearLayout)findViewById(R.id.category_checks);
-        LinearLayout rareChecks = (LinearLayout)findViewById(R.id.rarity_checks);
+        LinearLayout catChecks = (LinearLayout)v.findViewById(R.id.category_checks);
+        LinearLayout rareChecks = (LinearLayout)v.findViewById(R.id.rarity_checks);
 
         //Pula a 0 que e o texto
         for(int i = 1; i<catChecks.getChildCount(); i++){
@@ -398,7 +490,7 @@ public class ItemListActivity extends ListActivity {
     {
         String json = null;
         try{
-            InputStream is = getAssets().open("items.json");
+            InputStream is = getActivity().getAssets().open("items.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

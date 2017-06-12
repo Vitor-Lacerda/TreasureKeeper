@@ -7,19 +7,20 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ItemListActivity">
+        android:theme="@style/AppTheme.NoTitleBar">
+        <activity android:name=".ItemListFragment"/>
+        <activity
+            android:name=".ItemDetailActivity"
+            android:label="@string/title_activity_item_detail"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity android:name=".ItemDetailPagerActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ItemDetailActivity"
-            android:label="@string/title_activity_item_detail"
-            android:theme="@style/AppTheme.NoTitleBar"></activity>
-        <activity android:name=".ItemDetailPagerActivity"></activity>
     </application>
 
 </manifest>
