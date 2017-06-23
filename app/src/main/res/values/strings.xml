@@ -31,6 +31,26 @@
     <string name="requires">Requires</string>
     <string name="doesnt_require">Doesn\'t Require</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="group_info">Group Information</string>
+    <string name="enemy_info">Enemy Information</string>
+    <string name="encounter_info">Encounter Information</string>
+    <string name="players">Players:</string>
+    <string name="level">Level:</string>
+    <string name="dif_easy">Easy:</string>
+    <string name="dif_med">Medium:</string>
+    <string name="dif_hard">Hard:</string>
+    <string name="dif_deadly">Deadly:</string>
+    <string name="enemies">Enemies:</string>
+    <string name="cr">CR:</string>
+    <string name="xp">XP:</string>
+    <string name="xpa">Adjusted XP:</string>
+    <string name="difficulty">Difficulty:</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="deadly">Deadly</string>
+    <string name="trivial">Trivial</string>
+
 
     <string-array name="nav_string_array">
         <item>Random Treasure</item>
@@ -41,6 +61,103 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="player_dropdown">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+
+
+    </string-array>
+
+
+    <string-array name="enemy_dropdown">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="cr_dropdown">
+        <item>0</item>
+        <item>1/8</item>
+        <item>1/4</item>
+        <item>1/2</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+    </string-array>
+
 
 
 </resources>

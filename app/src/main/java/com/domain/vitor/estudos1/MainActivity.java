@@ -19,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView drawerList;
 
+
     private ItemListFragment magicItemListFragment;
+    private EncounterDifficultyFragment encounterDifficultyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
                        magicItemListFragment = ItemListFragment.newInstance();
                     }
                     fragmentManager.beginTransaction().replace(R.id.main_content_frame, magicItemListFragment).commit();
+                }
+                //Dificuldade de encontros
+                if(position == 3){
+                    if(encounterDifficultyFragment == null) {
+                        encounterDifficultyFragment = EncounterDifficultyFragment.newInstance();
+                    }
+                    fragmentManager.beginTransaction().replace(R.id.main_content_frame, encounterDifficultyFragment).commit();
                 }
 
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
