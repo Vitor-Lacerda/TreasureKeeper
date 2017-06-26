@@ -19,12 +19,18 @@ import java.util.HashMap;
 
 public class EncounterDifficultyFragment extends Fragment {
 
+
+
     private HashMap<Integer, Integer[]> xpThresholds;
     private HashMap<Integer, Float> multipliers;
     private HashMap<String,Integer> xp_by_cr;
 
 
     private int[] difficultyThresholds = new int[4];
+    private int[] playersValues = new int[5];
+    private int[] levelsValues = new int[5];
+    private int[] enemiesValues = new int[5];
+    private int[] crValues = new int[5];
 
     int levelsCount, CRCount;
 
@@ -78,7 +84,8 @@ public class EncounterDifficultyFragment extends Fragment {
                     LinearLayout dropdowns = (LinearLayout) mInflater.inflate(R.layout.encounter_info_dropdowns, (ViewGroup) v.getRootView(), false);
                     LinearLayout drops_layout = (LinearLayout) mainLayout.findViewById(R.id.player_dropdowns_container);
                     setPlayerSpinners(dropdowns,false);
-
+                    CalculateDifficultyThresholds();
+                    CalculateEncounterDifficulty();
                     drops_layout.addView(dropdowns);
                     levelsCount++;
                     if(levelsCount>=5){
@@ -88,6 +95,7 @@ public class EncounterDifficultyFragment extends Fragment {
 
             }
         });
+
 
         /*Configura a parte dos inimigos*/
         final LinearLayout monsterLayouts = (LinearLayout)mainLayout.findViewById(R.id.enemy_dropdowns_container);
@@ -104,7 +112,8 @@ public class EncounterDifficultyFragment extends Fragment {
                     LinearLayout dropdowns = (LinearLayout) mInflater.inflate(R.layout.encounter_info_dropdowns, (ViewGroup) v.getRootView(), false);
                    // LinearLayout drops_layout = (LinearLayout) mainLayout.findViewById(R.id.enemy_dropdowns_container);
                     setMonsterSpinners(dropdowns,false);
-
+                    CalculateDifficultyThresholds();
+                    CalculateEncounterDifficulty();
                     monsterLayouts.addView(dropdowns);
                     CRCount++;
                     if(CRCount>=5){
@@ -116,8 +125,32 @@ public class EncounterDifficultyFragment extends Fragment {
         });
 
 
+        /*Carrega o estado anterior*/
+        /*
+        int lCount = levelsCount;
+        int crCount = CRCount;
+
+        levelsCount = 1;
+        CRCount = 1;
+
+        for(int l = 0;l<lCount-1;l++){
+            add_level_button.callOnClick();
+        }
+
+        for (int c = 0;c<crCount-1;c++){
+            add_cr_button.callOnClick();
+        }
+        */
+
+
+
+
+
 
         /*Configura as informacoes embaixo*/
+        CalculateDifficultyThresholds();
+        CalculateEncounterDifficulty();
+
 
 
 
@@ -139,6 +172,7 @@ public class EncounterDifficultyFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CalculateDifficultyThresholds();
+                CalculateEncounterDifficulty();
             }
 
             @Override
@@ -162,6 +196,7 @@ public class EncounterDifficultyFragment extends Fragment {
                 public void onClick(View v) {
                     ((ViewGroup) layout.getParent()).removeView(layout);
                     CalculateDifficultyThresholds();
+                    CalculateEncounterDifficulty();
                     levelsCount--;
                     if(levelsCount<5){
                         mainLayout.findViewById(R.id.add_level_button).setVisibility(View.VISIBLE);
@@ -174,7 +209,9 @@ public class EncounterDifficultyFragment extends Fragment {
         }
 
 
-        CalculateDifficultyThresholds();
+        //CalculateDifficultyThresholds();
+
+
     }
 
     private void setMonsterSpinners(final View layout, boolean first){
@@ -230,7 +267,7 @@ public class EncounterDifficultyFragment extends Fragment {
         }
 
 
-        CalculateEncounterDifficulty();
+        //CalculateEncounterDifficulty();
     }
 
     private void CalculateDifficultyThresholds(){
@@ -260,6 +297,7 @@ public class EncounterDifficultyFragment extends Fragment {
         ((TextView)mainLayout.findViewById(R.id.hard_number)).setText(Integer.toString(difficultyThresholds[2]));
         ((TextView)mainLayout.findViewById(R.id.deadly_number)).setText(Integer.toString(difficultyThresholds[3]));
 
+
     }
 
     private void CalculateEncounterDifficulty(){
@@ -272,6 +310,7 @@ public class EncounterDifficultyFragment extends Fragment {
         for(int i = 0; i<drops_layout.getChildCount();i++) {
             Spinner level = (Spinner)drops_layout.getChildAt(i).findViewById(R.id.level_dropdown);
             Spinner count = (Spinner)drops_layout.getChildAt(i).findViewById(R.id.count_dropdown);
+
 
             int countInt = count.getSelectedItemPosition()+1;
 
@@ -311,6 +350,36 @@ public class EncounterDifficultyFragment extends Fragment {
 
 
     }
+
+
+/*
+    @Override
+    public void onPause(){
+        super.onPause();
+        /*
+        LinearLayout player_drops_layout = (LinearLayout)mainLayout.findViewById(R.id.player_dropdowns_container);
+        for(int i = 0; i<player_drops_layout.getChildCount();i++) {
+            Spinner level = (Spinner)player_drops_layout.getChildAt(i).findViewById(R.id.level_dropdown);
+            Spinner count = (Spinner)player_drops_layout.getChildAt(i).findViewById(R.id.count_dropdown);
+
+            levelsValues[i] = level.getSelectedItemPosition();
+            playersValues[i] = count.getSelectedItemPosition();
+
+        }
+
+        LinearLayout enemy_drops_layout = (LinearLayout)mainLayout.findViewById(R.id.enemy_dropdowns_container);
+        for(int i = 0; i<enemy_drops_layout.getChildCount();i++) {
+            Spinner level = (Spinner)enemy_drops_layout.getChildAt(i).findViewById(R.id.level_dropdown);
+            Spinner count = (Spinner)enemy_drops_layout.getChildAt(i).findViewById(R.id.count_dropdown);
+
+            crValues[i] = level.getSelectedItemPosition();
+            enemiesValues[i] = count.getSelectedItemPosition();
+
+
+        }
+
+    }*/
+
 
 
     //Metodos de configuracao
