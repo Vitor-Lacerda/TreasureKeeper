@@ -67,6 +67,10 @@ public class EncounterDifficultyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        levelsCount = CRCount = 1;
+
+
         // Inflate the layout for this fragment
         mainLayout = (LinearLayout)inflater.inflate(R.layout.fragment_encounter_difficulty, container, false);
 
@@ -125,22 +129,6 @@ public class EncounterDifficultyFragment extends Fragment {
         });
 
 
-        /*Carrega o estado anterior*/
-        /*
-        int lCount = levelsCount;
-        int crCount = CRCount;
-
-        levelsCount = 1;
-        CRCount = 1;
-
-        for(int l = 0;l<lCount-1;l++){
-            add_level_button.callOnClick();
-        }
-
-        for (int c = 0;c<crCount-1;c++){
-            add_cr_button.callOnClick();
-        }
-        */
 
 
 

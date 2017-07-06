@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ItemListFragment magicItemListFragment;
     private EncounterDifficultyFragment encounterDifficultyFragment;
+    private QuickReferenceFragment quickReferenceFragment;
 
 
     @Override
@@ -53,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     ChangeFragment(magicItemListFragment);
                 }
+                if(position == 2){
+                    if(quickReferenceFragment == null) {
+                        quickReferenceFragment = QuickReferenceFragment.newInstance();
+                    }
+                    ChangeFragment(quickReferenceFragment);
+
+                }
+
                 //Dificuldade de encontros
                 if(position == 3){
 

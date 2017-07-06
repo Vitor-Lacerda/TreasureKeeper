@@ -6,4 +6,5 @@
     <color name="backgroundColor">#3F51B5</color>
     <color name="whiteText">#FFFFFF</color>
     <color name="tableBackground">#d9d8c0</color>
+    <color name="overlayBlocker">#43030303</color>
 </resources>
