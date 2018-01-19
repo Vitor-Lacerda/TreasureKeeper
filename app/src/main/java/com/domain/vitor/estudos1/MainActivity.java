@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView drawerList;
 
 
+    private RandomTreasureFragment randomTreasureFragment;
     private ItemListFragment magicItemListFragment;
     private EncounterDifficultyFragment encounterDifficultyFragment;
     private QuickReferenceFragment quickReferenceFragment;
@@ -46,7 +47,12 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), screensNames[position], Toast.LENGTH_SHORT).show();
 
-
+                if(position == 0) {
+                    if(randomTreasureFragment == null) {
+                        randomTreasureFragment = RandomTreasureFragment.newInstance();
+                    }
+                    ChangeFragment(randomTreasureFragment);
+                }
                 //Lista de Itens magicos
                 if(position == 1){
                     if(magicItemListFragment == null) {
@@ -61,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                     ChangeFragment(quickReferenceFragment);
 
                 }
-
                 //Dificuldade de encontros
                 if(position == 3){
 

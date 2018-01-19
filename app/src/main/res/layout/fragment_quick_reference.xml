@@ -420,6 +420,21 @@
             </TableRow>
 
             <!-- Misc -->
+            <TableRow
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/misc"
+                    android:textSize="@dimen/title_text_size"
+                    android:textStyle="bold"
+                    android:layout_span="2"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    />
+
+            </TableRow>
 
 
 

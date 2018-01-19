@@ -54,7 +54,6 @@
     <string name="movement">Movement</string>
 
 
-
     <string-array name="nav_string_array">
         <item>Random Treasure</item>
         <item>Magic Items</item>
@@ -314,6 +313,7 @@ weapon to make a melee atlack, or throws a melee
 weapon that does not have the thrown property, it also
 deals ld4 damage. An improvised thrown weapon has a
 normal range of 20 feet and a long range of 60 feet.\n(PHB P.148)</string>
+    <string name="misc">Misc</string>
 
 
 </resources>
